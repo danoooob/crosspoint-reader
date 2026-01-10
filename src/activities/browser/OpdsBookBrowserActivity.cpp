@@ -79,10 +79,10 @@ void OpdsBookBrowserActivity::loop() {
       if (WiFi.status() == WL_CONNECTED && WiFi.localIP() != IPAddress(0, 0, 0, 0)) {
         // WiFi connected - just retry fetching the feed
         Serial.printf("[%lu] [OPDS] Retry: WiFi connected, retrying fetch\n", millis());
-      state = BrowserState::LOADING;
-      statusMessage = "Loading...";
-      updateRequired = true;
-      fetchFeed(currentPath);
+        state = BrowserState::LOADING;
+        statusMessage = "Loading...";
+        updateRequired = true;
+        fetchFeed(currentPath);
       } else {
         // WiFi not connected - launch WiFi selection
         Serial.printf("[%lu] [OPDS] Retry: WiFi not connected, launching selection\n", millis());
@@ -382,9 +382,8 @@ void OpdsBookBrowserActivity::launchWifiSelection() {
   state = BrowserState::WIFI_SELECTION;
   updateRequired = true;
 
-  enterNewActivity(new WifiSelectionActivity(renderer, mappedInput, [this](const bool connected) {
-    onWifiSelectionComplete(connected);
-  }));
+  enterNewActivity(new WifiSelectionActivity(renderer, mappedInput,
+                                             [this](const bool connected) { onWifiSelectionComplete(connected); }));
 }
 
 void OpdsBookBrowserActivity::onWifiSelectionComplete(const bool connected) {
